@@ -1,0 +1,50 @@
+　インストール方法
+
+このパッケージからプログラムをインストールするためには、ソースのコンパイルが必
+要です。コンパイルするには、以下のように入力してください。（ %はプロンプトを表
+す）
+
+% ./configure
+% make
+
+なお、独自に設定してある configure オプションは以下の通りです。
+--enable-color(default)
+--disable-color         : カラー表示の機能をコンパイルする（しない）の設定を行
+                          います。
+
+
+
+コンパイルが無事に終了すればインストールが可能となります。インストールするには、
+以下のように入力してください。
+
+% su
+% make install
+
+make install でインストールされる標準のインストール先ディレクトリは /usr/local
+ となります。また、メッセージファイルは標準で /usr/local/share/rogue ディレク
+トリ以下に格納されます。
+
+
+※MinGW でコンパイルする場合
+MinGW で Windows用のバイナリファイルを作成する場合は、コンパイルの方法が異なり
+ます。まず、 src/Makefile.am のファイル中に "-DEUC \" と表示されている行があり
+ますので、その行を削除します。次に、以下のコマンドを実行します。実行すると
+configure スクリプトが生成されます。
+
+% autoscan ; aclocal ; autoconf ; autoheader ; automake --add-missing
+
+続いて、CFLAGS の環境変数を設定します。
+
+% export CFLAGS="-O2 --input-charset=euc-jp --exec-charset=cp932"
+
+最後に、以下を実行します。
+
+% ./configure
+% make
+
+src/rogue.exe が実行ファイルとなります。実行には Shift-JIS 形式のメッセージフ
+ァイルが必要になります。この配布物にあるメッセージファイル（ msg/mesg）は
+EUC-JP 形式なので、Shift-JIS に変換して使用しましょう。
+
+
+以上。
