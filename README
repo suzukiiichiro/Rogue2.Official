@@ -23,8 +23,7 @@ FUNABARA Masao氏の「rogueclone2s」メンテナンスバージョン
 ↓
 Naohiro Aota氏の「rogueclone2s-utf8」 ソースコードとmsgファイルはeuc 描画はUTF-8に対応
 ↓
-鈴木維一郎の「rogueClone2s-utf8_FIX」
-ソースコード、msgファイル、描画出力処理などすべてUTF-8に対応
+鈴木維一郎の「rogueClone2s-utf8_fix」 ソースコード、msg、描画出力処理などすべてにUTF-8に対応
 
 ではお楽しみ下さい。
 
