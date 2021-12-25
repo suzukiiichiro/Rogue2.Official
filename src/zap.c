@@ -47,7 +47,7 @@ static const char utf8len_codepage[256] =
   2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
   3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,
 };
-
+/**
 int utf8len(const char* p)
 {
     int len;
@@ -69,7 +69,7 @@ int utf8strlen(const char* p)
     }
     return len;
 }
-
+*/
 void
 zapp(void)
 {

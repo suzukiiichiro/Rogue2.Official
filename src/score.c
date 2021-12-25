@@ -35,39 +35,7 @@ extern short cur_level, max_level;
 extern boolean score_only, show_skull, msg_cleared;
 extern char *byebye_string, *nick_name;
 extern boolean use_color;
-static const char utf8len_codepage[256] =
-{
-  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-  2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-  3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,
-};
 
-int utf8len(const char* p)
-{
-    int len;
-    int i;
-
-    if (*p == 0) return 1;
-    len = utf8len_codepage[(const unsigned char)*p];
-    for (i = 1; i < len; ++i) {
-        if ((p[i] & 0xc0) != 0x80) return 1;
-    }
-    return len;
-}
-
-int utf8strlen(const char* p)
-{
-    int len;
-    for (len = 0; *p; ++len) {
-        p += utf8len(p);
-    }
-    return len;
-}
 #if !defined( ORIGINAL )
 #if defined( JAPAN )
 void

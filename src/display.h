@@ -1,6 +1,7 @@
 #if !defined( __DISPLAY_H__ )
 #define __DISPLAY_H__
 
+extern int utf8strlen(const char* p);
 extern void init_color_attr(void);
 extern int put_colorpair_number(char ch);
 extern void get_colorpair_number(char ch, int num);
