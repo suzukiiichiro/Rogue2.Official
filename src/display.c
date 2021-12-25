@@ -222,6 +222,28 @@ addstr_rogue(const char *str)
 }
 
 static iconv_t conv=NULL;
+#define  BUFSIZE  1024
+char outbuf[BUFSIZE];
+int convert(char const *src,char const *dest,char const *text,char *buf,size_t bufsize)
+{
+    iconv_t cd;
+    size_t srclen, destlen;
+    size_t ret;
+
+    cd = iconv_open(dest, src);
+    if (cd==(iconv_t)-1){ perror("iconv open");
+        return 0;
+    }
+
+    srclen = strlen(text);
+    destlen = bufsize - 1;
+    memset(buf, '\0', bufsize);
+
+    ret = iconv(cd,&text,&srclen,&buf,&destlen);
+    //if (ret==-1) { perror("iconv"); return 0; }
+    iconv_close(cd);
+    return 1;
+}
 /*
  * mvaddstr_rogue
  * mvaddstr のラッパー関数
@@ -247,25 +269,29 @@ mvaddstr_rogue(int y, int x, const char *str)
     }
 #endif /* COLOR */
 
-    size_t inleft=utf8strlen(str), outleft=1024;
-    //char *inptr= str;
-    char *inptr=str;
-    char *outbuf=malloc(outleft);
-    memset(outbuf, 0, 1024);
-    char *outptr=outbuf;
+  int ret=convert("UTF-8","UTF-8//TRANSLIT",str,outbuf,sizeof(outbuf));
+/**
+  size_t inleft=utf8strlen(str);
+  size_t outleft=1024-1;
+  char *inptr=str;
+  char *outbuf[outleft];
+  char *outptr=outbuf;
 
-    if(!conv) {
-      //conv=iconv_open("UTF-8//TRANSLIT", "EUC-JP");
-      conv=iconv_open("UTF-8//TRANSLIT", "UTF-8");
-    }else {
-      iconv(conv, NULL,NULL,NULL,NULL);
-    }
-    int n = iconv(conv, 
-		  &inptr, &inleft, 
-		  &outptr, &outleft);
-    int res = mvaddstr(y, x, outbuf);
-    free(outbuf);
-    return res;
+  if(!conv) {
+    conv=iconv_open("UTF-8//TRANSLIT", "UTF-8");
+  }else {
+    iconv(conv, NULL,NULL,NULL,NULL);
+  }
+  //int n=iconv(conv,&inptr,&inleft,&outptr,&outleft);
+  int n=iconv(conv,&inptr,&inleft,&outptr,&outleft);
+
+  int res=mvaddstr(y,x,outbuf);
+  free(outbuf);
+  return res;
+  */
+  int res=mvaddstr(y,x,outbuf);
+  //free(outbuf);
+  return res;
 }
 
 /*
