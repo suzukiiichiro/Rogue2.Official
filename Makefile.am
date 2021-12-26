@@ -1,2 +1,2 @@
 EXTRA_DIST = AUTHORS ChangeLog ChangeLog-0 INSTALL MANIFEST NEWS README TODO
-SUBDIRS = doc man msg src
+SUBDIRS = doc man src
