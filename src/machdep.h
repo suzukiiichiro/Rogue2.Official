@@ -20,7 +20,7 @@
 /* 使用の関数を使わないことで回避 */
 //あとで考えなおす
 #if !defined( HAVE_ATTR_GET )
-# define attr_get
+//# define attr_get
 #endif
 
 #if !defined( HAVE_GETLOGIN )

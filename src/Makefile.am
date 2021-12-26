@@ -1,3 +1,4 @@
+#あ
 bin_PROGRAMS = rogue
 
 rogue_SOURCES = \

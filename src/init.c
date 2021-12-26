@@ -51,6 +51,19 @@ extern short party_room, party_counter;
 extern boolean jump;
 
 static const char utf8len_codepage[256] =
+ {
+   1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+   1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+   1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+   1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+   1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+   1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+   1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+   3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,
+ };
+ #define utf8_islead(c) ((unsigned char)((c)&0xc0) != 0x80) 
+/**
+ * static const char utf8len_codepage[256] =
 {
   1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
   1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -61,25 +74,69 @@ static const char utf8len_codepage[256] =
   2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
   3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,
 };
+*/
 int utf8len(const char* p)
 {
-    int len;
-    int i;
-
-    if (*p==0) return 1;
-    len = utf8len_codepage[(const unsigned char)*p];
-    for (i =1;i<len*4;++i) {
-        if ((p[i] & 0xc0) != 0x80) return 1;
-    }
-    return len;
+  int len;
+  if(*p==0) return 1;
+  len=utf8len_codepage[(const unsigned char)*p];
+  for(int i=1;i<len;++i) {
+    if(utf8_islead(p[i])) return 1;
+  }
+  return len;
 }
-int utf8strlen(const char* p)
+//u8mb関数：UTF-8文字の1バイト目を判定して文字のバイト数を返す関数
+int 
+u8mb(const char chr)
 {
-    int len;
-    for (len=0; *p; ++len) {
-        p += utf8len(p);
+	int byt = 1;
+	if ((chr & 0x80) == 0x00) { //1byte文字は何もしない（[byt = 1]のまま）
+	} else if ((chr & 0xE0) == 0xC0) { //2byte文字
+		byt = 2;
+	} else if ((chr & 0xF0) == 0xE0) { //3byte文字
+		byt = 3;
+	} else if ((chr & 0xF8) == 0xF0) { //4byte文字
+		byt = 4;
+	} else if ((chr & 0xFC) == 0xF8) { //5byte文字
+		byt = 5;
+	} else if ((chr & 0xFE) == 0xFC) { //6byte文字
+		byt = 6;
+	}
+	return byt;
+}
+int 
+utf8strlen(const char *str)
+{
+  /**
+	int cnt = 0;
+	while (*str!='\0') {
+		cnt++;
+		str += u8mb(*str);
+	}
+	return cnt;
+  */
+  /**
+    //3 
+    int cnt = 0;
+    for (int i = 0; str[i] != '\0'; i++){
+      //マルチバイト文字の2バイト目以降についてのビット演算
+      //該当する場合はカウントしない
+      if ((str[i] & 0xC0) == 0x80) { 
+      } else {
+        cnt++; //該当しない場合にカウントする
+      }
     }
-    return len;
+    return cnt;
+  */
+  // 2
+  //return strlen(p);
+
+  // 1 
+  int len;
+  for (len=0;*str*3;++len) {
+    str+=utf8len(str);
+  }
+  return len;
 }
 
 int
@@ -210,7 +267,7 @@ clean_up(char *estr)
 	}
 	endwin();
 	printf("\r\n");
-	printf(estr);
+	printf("%s\n",estr);
 	printf("\r\n");
     }
     md_exit(0);
@@ -516,11 +573,11 @@ env_get_value(char **s, char *e, boolean add_blank, boolean no_colon)
 	}
 #else /* not EUC */
 	/* Shift JIS のマルチバイト文字は読み飛ばす */
-	if (*e > '\200' && *e < '\240' || *e >= '\340' && *e < '\360') {
-	    e += 2;
-	    i += 2;
-	    continue;
-	}
+	//if (*e > '\200' && *e < '\240' || *e >= '\340' && *e < '\360') {
+	//    e += 2;
+	//    i += 2;
+	//    continue;
+	//}
 #endif /* not EUC */
 	if (*e == ':' && no_colon) {
 	    *e = ';';		/* ':' reserved for score file purposes */

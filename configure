@@ -4789,7 +4789,7 @@ done
 
 
 
-ac_config_files="$ac_config_files Makefile doc/Makefile man/Makefile msg/Makefile src/Makefile"
+ac_config_files="$ac_config_files Makefile doc/Makefile man/Makefile src/Makefile"
 
 
 # Check whether --enable-color was given.
@@ -5528,7 +5528,6 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "doc/Makefile") CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
     "man/Makefile") CONFIG_FILES="$CONFIG_FILES man/Makefile" ;;
-    "msg/Makefile") CONFIG_FILES="$CONFIG_FILES msg/Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;

@@ -4,23 +4,18 @@ OS=`uname`;
 echo "OS:$OS";
 if [ "$OS" = "Linux" ]; then
   echo "Linux";
+  /bin/rm -fr rogue;
   make clean ;
   ./configure ;
   make ;
-  cp src/rogue .
+  /bin/cp src/rogue .
 elif [ "$OS" = "Darwin" ]; then
   echo "Darwin" ;
+  /bin/rm -fr rogue;
   make clean ;
   ./configure CFLAGS="-g -O2 -w -Wno-return-type" LDFLAGS="-lcurses -liconv";
   make ;
-  cp src/rogue .;
-
-  #EUC
-  #cp msg/mesg .;
-  #./rogue mesg ;
-
-  #UTF-8
-  cp msg/mesg.utf-8 . ;
-  ./rogue mesg.utf-8 ;
+  /bin/cp src/rogue .;
 fi
+./rogue mesg ;
 exit ;
