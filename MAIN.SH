@@ -8,6 +8,9 @@ if [ "$OS" = "Linux" ]; then
   make clean ;
   ./configure ;
   make ;
+  #
+  yum install ncurses-devel
+  #
   /bin/cp src/rogue .
 elif [ "$OS" = "Darwin" ]; then
   echo "Darwin" ;
