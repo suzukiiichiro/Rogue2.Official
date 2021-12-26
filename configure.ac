@@ -38,7 +38,6 @@ AC_CHECK_FUNCS([assume_default_colors attr_get])
 AC_CONFIG_FILES([Makefile
                  doc/Makefile
                  man/Makefile
-                 msg/Makefile
                  src/Makefile])
 
 AC_ARG_ENABLE([color],
