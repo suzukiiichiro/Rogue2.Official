@@ -216,6 +216,14 @@ https://britzl.github.io/roguearchive/
 ○概要
 https://ja.wikipedia.org/wiki/ローグ
 
+○おとなの自由研究
+自由研究｜『ローグ・クローン２　日本語版１．３』は、どのバージョンの日本語版なのか？
+https://masatler.hatenablog.com/entry/2021/07/02/082806
+※苦労を掛けさせてすまない（鈴木維一郎）
+
+○masatora_bd5さんの労作
+https://cdn-ak.f.st-hatena.com/images/fotolife/m/masatora_bd5/20210702/20210702081427.jpg
+
 ○Rogueとは
 http://fairygam3.appspot.com/game/rpg/rogue.html
 　ローグと言えばコンピューターRPGの3大始祖である「Rogue」、「Ultima」、	
@@ -272,11 +280,17 @@ http://fairygam3.appspot.com/game/rpg/rogue.html
 
 
 
-
 ○インストール方法
 
-このパッケージからプログラムをインストールするためには、ソースのコンパイルが必
-要です。コンパイルするには、以下のように入力してください。（ %はプロンプトを表
+<> もっとも簡単なインストール方法
+% bash MAIN.SH
+
+実行方法
+% ./rogue mesg.utf-8 ;
+
+
+<> 難しくかんがえたい人むけ
+このパッケージからプログラムをインストールするためには、ソースのコンパイルが必要です。コンパイルするには、以下のように入力してください。（ %はプロンプトを表
 す）
 
 git をインストールして下さい。
