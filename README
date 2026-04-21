@@ -207,6 +207,9 @@ Naohiro Aota氏の「データ分離版ローグ・クローン2s UTF-8」(rogue
 資源のすべてをUTF-8化 Linux/UNIX/Macに対応
 
 
+○【神降臨】Rogue Mobile (Godot) Rogue2.Official（rougeclone2）をベースにスマートフォンの縦画面で遊びやすくすることを目的とした移植プロジェクト
+https://github.com/lunalukun/godot-rougeclone2 
+
 ○【これは凄い】Vim script + Lua で rogue.vim を作った話
 https://qiita.com/katono123/items/ccc2721163b7c6bbc0a6
 
